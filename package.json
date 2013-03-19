@@ -1,0 +1,22 @@
+{
+  "name": "limiter-component",
+  "version": "0.0.1",
+  "description": "Limits the rate of function calls to one per period. It delays but does not throttle the calls.",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": "",
+  "keywords": [
+    "limit",
+    "throttle"
+  ],
+  "author": "Damian Krzeminski <pirxpilot@code42day.com>",
+  "license": "MIT",
+  "readmeFilename": "Readme.md",
+  "gitHead": "25a8c5e09cb9773c439c53432ae5efa7a9c4ffb2",
+  "devDependencies": {
+    "mocha": "~1.8.2",
+    "jshint": "~1.1.0"
+  }
+}
