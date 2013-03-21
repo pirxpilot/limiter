@@ -4,6 +4,8 @@
   Limits the rate of function calls to one per period. It delays but does not throttle the calls.
   Useful when your codes needs to behave well when calling rate limited API.
 
+  If you need something more flexible use [rate limiter](https://npmjs.org/package/limiter)
+
 ## Installation
 
     $ component install code42day/limiter
