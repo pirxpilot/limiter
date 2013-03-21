@@ -16,26 +16,25 @@ function limiter(interval) {
   }
 
   function deque() {
-    var fn = queue.shift();
     timer = undefined;
-    lastTrigger = now();
+    var fn = queue.shift();
     fn();
-    if (queue.length) {
-      schedule();
-    }
+    lastTrigger = now();
+    schedule();
   }
 
   function schedule() {
-    var now = Date.now();
-    timer = setTimeout(deque, interval - since());
+    if (!timer && queue.length) {
+      timer = setTimeout(deque, interval - since());
+    }
   }
 
   function trigger(fn) {
-    queue.push(fn);
-    if (since() >= interval) {
-      deque();
-    }
-    else {
+    if (since() >= interval && !queue.length) {
+      fn();
+      lastTrigger = now();
+    } else {
+      queue.push(fn);
       schedule();
     }
   }
