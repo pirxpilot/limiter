@@ -33,19 +33,28 @@ function doThat() {
 l.trigger(doThis);
 l.trigger(doThat);
 l.trigger(doThis);
+l.trigger(function() {
+	l.penalty(); // wait a bit longer next time
+});
 l.trigger(doThat);
 ```
 
 ## API
 
-### limiter(interval)
+### limiter(interval, [penaltyInterval])
 
-Create `limiter` with desired `interval` (in millis).
+Create `limiter` with desired `interval` (in millis). Optional `penaltyInterval` is used instead of
+`interval` if `limiter.penalty()` has been called at least once since last limited function has been
+triggered.
 
 ### trigger(fn)
 
 Add `fn` to `limiter` queue. It will be called when `interval` elapsed since another function from
 the queue was called.
+
+### penalty()
+
+Make limiter to use `penaltyInterval` before triggering next function.
 
 ### cancel()
 
