@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/code42day/limiter.png)](http://travis-ci.org/code42day/limiter)
+[![Build Status](https://img.shields.io/travis/code42day/limiter.svg)](http://travis-ci.org/code42day/limiter)
 
 # limiter
 
