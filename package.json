@@ -1,13 +1,13 @@
 {
   "name": "limiter-component",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Limits the rate of function calls to one per period. It delays but does not throttle the calls.",
   "scripts": {
     "test": "make test"
   },
   "repository": "code42day/limiter",
   "keywords": [
-	"browser",
+    "browser",
     "limit",
     "throttle"
   ],
