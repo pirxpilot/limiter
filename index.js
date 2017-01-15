@@ -11,7 +11,7 @@ function limiter(interval, penaltyInterval) {
     timer;
 
   function now() {
-    return + (new Date);
+    return Date.now();
   }
 
   function since() {

@@ -9,7 +9,7 @@ describe('limiter', function(){
       results = [];
 
     function push() {
-      results.push(+(new Date));
+      results.push(Date.now());
     }
 
     l.trigger(push);
@@ -39,7 +39,7 @@ describe('limiter', function(){
       results = [];
 
     function push() {
-      results.push(+(new Date));
+      results.push(Date.now());
       if (results.length === 2) {
         l.penalty();
       }
