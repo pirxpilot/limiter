@@ -1,4 +1,6 @@
-[![Build Status](https://img.shields.io/travis/code42day/limiter.svg)](http://travis-ci.org/code42day/limiter)
+[![NPM version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
+[![Dependency Status][gemnasium-image]][gemnasium-url]
 
 # limiter
 
@@ -9,8 +11,7 @@
 
 ## Installation
 
-    $ component install code42day/limiter
-
+    $ npm install --save limiter-component
 
 ## Usage
 
@@ -64,3 +65,12 @@ Empty `limiter` queue. Remove all pending trigger request. No methods from the q
 ## License
 
   MIT
+
+[npm-image]: https://img.shields.io/npm/v/limiter-component.svg
+[npm-url]: https://npmjs.org/package/limiter-component
+
+[travis-url]: https://travis-ci.org/code42day/limiter
+[travis-image]: https://img.shields.io/travis/code42day/limiter.svg
+
+[gemnasium-image]: https://img.shields.io/gemnasium/code42day/limiter.svg
+[gemnasium-url]: https://gemnasium.com/code42day/limiter
