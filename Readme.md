@@ -35,9 +35,13 @@ l.trigger(doThis);
 l.trigger(doThat);
 l.trigger(doThis);
 l.trigger(function() {
-	l.penalty(); // wait a bit longer next time
+	l.penalty(); // wait a bit longer the next time
 });
 l.trigger(doThat);
+l.trigger(function() {
+	l.skip(); // don't wait at all the next time
+});
+l.trigger(doThis);
 ```
 
 ## API
@@ -55,7 +59,11 @@ the queue was called.
 
 ### penalty()
 
-Make limiter to use `penaltyInterval` before triggering next function.
+Make limiter use `penaltyInterval` before triggering next function.
+
+### skip()
+
+Make limiter trigger next function immediately.
 
 ### cancel()
 

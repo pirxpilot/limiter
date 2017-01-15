@@ -8,6 +8,7 @@ function limiter(interval, penaltyInterval) {
   var queue = [],
     lastTrigger = 0,
     penaltyCounter = 0,
+    skipCounter = 0,
     timer;
 
   function now() {
@@ -25,7 +26,14 @@ function limiter(interval, penaltyInterval) {
   function runNow(fn) {
     penaltyCounter = 0;
     fn();
-    lastTrigger = now();
+    // wait to the next interval unless told to skip
+    // to the next operation immediately
+    if (skipCounter > 0) {
+      skipCounter = 0;
+    }
+    else {
+      lastTrigger = now();
+    }
   }
 
   function deque() {
@@ -37,8 +45,13 @@ function limiter(interval, penaltyInterval) {
   }
 
   function schedule() {
+    var delay;
     if (!timer && queue.length) {
-      timer = setTimeout(deque, currentInterval() - since());
+      delay = currentInterval() - since();
+      if (delay < 0) {
+        return deque();
+      }
+      timer = setTimeout(deque, delay);
     }
   }
 
@@ -55,6 +68,10 @@ function limiter(interval, penaltyInterval) {
     penaltyCounter += 1;
   }
 
+  function skip() {
+    skipCounter += 1;
+  }
+
   function cancel() {
     if (timer) {
       clearTimeout(timer);
@@ -66,6 +83,7 @@ function limiter(interval, penaltyInterval) {
   return {
     trigger: trigger,
     penalty: penalty,
+    skip: skip,
     cancel: cancel
   };
 }

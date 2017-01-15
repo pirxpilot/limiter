@@ -99,4 +99,38 @@ describe('limiter', function(){
       done();
     });
   });
+
+  it('should skip interval on true', function(done){
+      var interval = 35,
+        l = limiter(interval),
+        results = [];
+
+      l.trigger(function () {
+          results.push(Date.now());
+      });
+
+      function push() {
+        results.push(Date.now());
+        l.skip();
+      }
+
+      l.trigger(push);
+      l.trigger(push);
+      l.trigger(push);
+      l.trigger(function() {
+        assert.equal(results.length, 4);
+        results
+          .map(function(item, i) {
+            var prev = (i === 0) ? results[0] : results[i - 1];
+            return item - prev;
+          })
+          .forEach(function(item, i) {
+            if (i > 1) {
+              assert.ok(item < interval);
+            }
+          });
+        done();
+      });
+    });
+
 });
