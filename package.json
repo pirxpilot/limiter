@@ -5,17 +5,14 @@
   "scripts": {
     "test": "make test"
   },
-  "repository": "code42day/limiter",
+  "repository": "pirxpilot/limiter",
   "keywords": [
     "browser",
     "limit",
     "throttle"
   ],
-  "author": "Damian Krzeminski <pirxpilot@code42day.com>",
+  "author": "Damian Krzeminski <pirxpilot@furkot.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/code42day/limiter/issues"
-  },
   "devDependencies": {
     "mocha": "~3",
     "jshint": "~2"

@@ -77,8 +77,8 @@ Empty `limiter` queue. Remove all pending trigger request. No methods from the q
 [npm-image]: https://img.shields.io/npm/v/limiter-component.svg
 [npm-url]: https://npmjs.org/package/limiter-component
 
-[travis-url]: https://travis-ci.org/code42day/limiter
-[travis-image]: https://img.shields.io/travis/code42day/limiter.svg
+[travis-url]: https://travis-ci.org/pirxpilot/limiter
+[travis-image]: https://img.shields.io/travis/pirxpilot/limiter.svg
 
-[gemnasium-image]: https://img.shields.io/gemnasium/code42day/limiter.svg
-[gemnasium-url]: https://gemnasium.com/code42day/limiter
+[gemnasium-image]: https://img.shields.io/gemnasium/pirxpilot/limiter.svg
+[gemnasium-url]: https://gemnasium.com/pirxpilot/limiter
