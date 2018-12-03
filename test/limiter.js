@@ -1,12 +1,12 @@
-var limiter = require('../index.js');
-var assert = require('assert');
+const limiter = require('../index.js');
+const assert = require('assert');
 
 
-describe('limiter', function(){
-  it('should call fn at most once per interval', function(done){
-    var interval = 35,
-      l = limiter(interval),
-      results = [];
+describe('limiter', function () {
+  it('should call fn at most once per interval', function (done) {
+    const interval = 35;
+    const l = limiter(interval);
+    const results = [];
 
     function push() {
       results.push(Date.now());
@@ -16,14 +16,14 @@ describe('limiter', function(){
     l.trigger(push);
     l.trigger(push);
     l.trigger(push);
-    l.trigger(function() {
+    l.trigger(function () {
       assert.equal(results.length, 4);
       results
-        .map(function(item, i) {
-          var prev = (i === 0) ? results[0] : results[i - 1];
+        .map(function (item, i) {
+          const prev = (i === 0) ? results[0] : results[i - 1];
           return item - prev;
         })
-        .forEach(function(item, i) {
+        .forEach(function (item, i) {
           if (i > 0) {
             assert.ok(item >= interval);
           }
@@ -32,11 +32,11 @@ describe('limiter', function(){
     });
   });
 
-  it('should delay calls on penalty', function(done) {
-    var interval = 35,
-      penaltyInterval = 150,
-      l = limiter(interval, penaltyInterval),
-      results = [];
+  it('should delay calls on penalty', function (done) {
+    const interval = 35;
+    const penaltyInterval = 150;
+    const l = limiter(interval, penaltyInterval);
+    const results = [];
 
     function push() {
       results.push(Date.now());
@@ -49,14 +49,14 @@ describe('limiter', function(){
     l.trigger(push);
     l.trigger(push);
     l.trigger(push);
-    l.trigger(function() {
+    l.trigger(function () {
       assert.equal(results.length, 4);
       results
-        .map(function(item, i) {
-          var prev = (i === 0) ? results[0] : results[i - 1];
+        .map(function (item, i) {
+          const prev = (i === 0) ? results[0] : results[i - 1];
           return item - prev;
         })
-        .forEach(function(item, i) {
+        .forEach(function (item, i) {
           if (i === 0) {
             return;
           }
@@ -71,66 +71,65 @@ describe('limiter', function(){
     });
   });
 
-  it('delay works even when queue is empty', function(done) {
-    var interval = 50,
-      l = limiter(interval),
-      time = Date.now();
+  it('delay works even when queue is empty', function (done) {
+    const interval = 50;
+    const l = limiter(interval);
+    const time = Date.now();
 
-    l.trigger(function() {
-    });
-    l.trigger(function() {
-      var delay = Date.now() - time;
+    l.trigger(function () {});
+    l.trigger(function () {
+      const delay = Date.now() - time;
       assert.ok(delay >= interval);
       done();
     });
   });
 
-  it('penalty works even when queue is empty', function(done) {
-    var interval = 50,
-      l = limiter(interval),
-      time = Date.now();
+  it('penalty works even when queue is empty', function (done) {
+    const interval = 50;
+    const l = limiter(interval);
+    const time = Date.now();
 
-    l.trigger(function() {
+    l.trigger(function () {
       l.penalty();
     });
-    l.trigger(function() {
-      var delay = Date.now() - time;
+    l.trigger(function () {
+      const delay = Date.now() - time;
       assert.ok(delay >= 5 * interval);
       done();
     });
   });
 
-  it('should skip interval on true', function(done){
-      var interval = 35,
-        l = limiter(interval),
-        results = [];
+  it('should skip interval on true', function (done) {
+    const interval = 35;
+    const l = limiter(interval);
+    const results = [];
 
-      l.trigger(function () {
-          results.push(Date.now());
-      });
-
-      function push() {
-        results.push(Date.now());
-        l.skip();
-      }
-
-      l.trigger(push);
-      l.trigger(push);
-      l.trigger(push);
-      l.trigger(function() {
-        assert.equal(results.length, 4);
-        results
-          .map(function(item, i) {
-            var prev = (i === 0) ? results[0] : results[i - 1];
-            return item - prev;
-          })
-          .forEach(function(item, i) {
-            if (i > 1) {
-              assert.ok(item < interval);
-            }
-          });
-        done();
-      });
+    l.trigger(function () {
+      results.push(Date.now());
     });
+
+    function push() {
+      results.push(Date.now());
+      l.skip();
+    }
+
+    l.trigger(push);
+    l.trigger(push);
+    l.trigger(push);
+    l.trigger(function () {
+      assert.equal(results.length, 4);
+      results
+        .map(function (item, i) {
+          const prev = (i === 0) ? results[0] : results[i - 1];
+          return item - prev;
+        })
+        .forEach(function (item, i) {
+          if (i > 1) {
+            assert.ok(item < interval);
+          }
+        });
+      done();
+    });
+  });
 
 });

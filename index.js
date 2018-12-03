@@ -1,59 +1,18 @@
-
 module.exports = limiter;
 
-/*global setTimeout, clearTimeout */
+function limiter(interval, penaltyInterval = 5 * interval) {
+  let queue = [];
+  let lastTrigger = 0;
+  let penaltyCounter = 0;
+  let skipCounter = 0;
+  let timer;
 
-function limiter(interval, penaltyInterval) {
-
-  var queue = [],
-    lastTrigger = 0,
-    penaltyCounter = 0,
-    skipCounter = 0,
-    timer;
-
-  function now() {
-    return Date.now();
-  }
-
-  function since() {
-    return now() - lastTrigger;
-  }
-
-  function currentInterval() {
-    return penaltyCounter > 0 ? penaltyInterval : interval;
-  }
-
-  function runNow(fn) {
-    penaltyCounter = 0;
-    fn();
-    // wait to the next interval unless told to skip
-    // to the next operation immediately
-    if (skipCounter > 0) {
-      skipCounter = 0;
-    }
-    else {
-      lastTrigger = now();
-    }
-  }
-
-  function deque() {
-    timer = undefined;
-    if (since() >= currentInterval()) {
-      runNow(queue.shift());
-    }
-    schedule();
-  }
-
-  function schedule() {
-    var delay;
-    if (!timer && queue.length) {
-      delay = currentInterval() - since();
-      if (delay < 0) {
-        return deque();
-      }
-      timer = setTimeout(deque, delay);
-    }
-  }
+  return {
+    trigger,
+    penalty,
+    skip,
+    cancel
+  };
 
   function trigger(fn) {
     if (since() >= currentInterval() && !queue.length) {
@@ -79,11 +38,41 @@ function limiter(interval, penaltyInterval) {
     queue = [];
   }
 
-  penaltyInterval = penaltyInterval || 5 * interval;
-  return {
-    trigger: trigger,
-    penalty: penalty,
-    skip: skip,
-    cancel: cancel
-  };
+  function since() {
+    return Date.now() - lastTrigger;
+  }
+
+  function currentInterval() {
+    return penaltyCounter > 0 ? penaltyInterval : interval;
+  }
+
+  function runNow(fn) {
+    penaltyCounter = 0;
+    fn();
+    // wait to the next interval unless told to skip
+    // to the next operation immediately
+    if (skipCounter > 0) {
+      skipCounter = 0;
+    } else {
+      lastTrigger = Date.now();
+    }
+  }
+
+  function deque() {
+    timer = undefined;
+    if (since() >= currentInterval()) {
+      runNow(queue.shift());
+    }
+    schedule();
+  }
+
+  function schedule() {
+    if (!timer && queue.length) {
+      const delay = currentInterval() - since();
+      if (delay < 0) {
+        return deque();
+      }
+      timer = setTimeout(deque, delay);
+    }
+  }
 }
