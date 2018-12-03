@@ -1,6 +1,6 @@
 [![NPM version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Dependency Status][gemnasium-image]][gemnasium-url]
+[![Build Status][build-image]][build-url]
+[![Dependency Status][deps-image]][deps-url]
 
 # limiter
 
@@ -74,11 +74,11 @@ Empty `limiter` queue. Remove all pending trigger request. No methods from the q
 
   MIT
 
-[npm-image]: https://img.shields.io/npm/v/limiter-component.svg
+[npm-image]: https://img.shields.io/npm/v/limiter-component
 [npm-url]: https://npmjs.org/package/limiter-component
 
-[travis-url]: https://travis-ci.org/pirxpilot/limiter
-[travis-image]: https://img.shields.io/travis/pirxpilot/limiter.svg
+[build-url]: https://github.com/pirxpilot/limiter/actions/workflows/check.yaml
+[build-image]: https://img.shields.io/github/workflow/status/pirxpilot/limiter/check
 
-[gemnasium-image]: https://img.shields.io/gemnasium/pirxpilot/limiter.svg
-[gemnasium-url]: https://gemnasium.com/pirxpilot/limiter
+[deps-image]: https://img.shields.io/librariesio/release/npm/limiter-component
+[deps-url]: https://libraries.io/npm/limiter-component
