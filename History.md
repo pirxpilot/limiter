@@ -1,4 +1,11 @@
 
+1.1.0 / 2022-08-31
+==================
+
+ * upgrade mocha to ~10
+ * rewrite in ES6
+ * replace Travis CI with github actions
+
 1.0.1 / 2017-02-19
 ==================
 
