@@ -1,9 +1,14 @@
 {
+  "eqeqeq": true,
+  "eqnull": true,
+  "immed": true,
+  "latedef": "nofunc",
+  "mocha" : true,
+  "newcap": true,
+  "noarg": true,
+  "node": true,
+  "sub": true,
   "undef": true,
   "unused": true,
-  "laxbreak": true,
-  "laxcomma": true,
-  "node": true,
-  "browser": true,
-  "mocha": true
+  "esversion": 6
 }

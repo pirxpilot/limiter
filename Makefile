@@ -1,4 +1,4 @@
-all: lint test
+check: lint test
 
 lint:
 	@./node_modules/.bin/jshint index.js test/*.js
