@@ -42,6 +42,11 @@ l.trigger(function() {
 	l.skip(); // don't wait at all the next time
 });
 l.trigger(doThis);
+
+// you can also wait for the trigger using Promises
+
+await l.trigger(); // note that `fn` is optional
+// trigger has been resolved
 ```
 
 ## API
@@ -55,7 +60,7 @@ triggered.
 ### trigger(fn)
 
 Add `fn` to `limiter` queue. It will be called when `interval` elapsed since another function from
-the queue was called.
+the queue was called. Returns a promise, which is resolved when `fn` is called.
 
 ### penalty()
 

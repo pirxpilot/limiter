@@ -15,12 +15,14 @@ function limiter(interval, penaltyInterval = 5 * interval) {
   };
 
   function trigger(fn) {
+    const p = promised(fn);
     if (since() >= currentInterval() && !queue.length) {
-      runNow(fn);
+      runNow(p);
     } else {
-      queue.push(fn);
+      queue.push(p);
       schedule();
     }
+    return p.promise;
   }
 
   function penalty() {
@@ -35,6 +37,7 @@ function limiter(interval, penaltyInterval = 5 * interval) {
     if (timer) {
       clearTimeout(timer);
     }
+    queue.forEach(p => p.reject());
     queue = [];
   }
 
@@ -46,9 +49,9 @@ function limiter(interval, penaltyInterval = 5 * interval) {
     return penaltyCounter > 0 ? penaltyInterval : interval;
   }
 
-  function runNow(fn) {
+  function runNow(p) {
     penaltyCounter = 0;
-    fn();
+    p.resolve();
     // wait to the next interval unless told to skip
     // to the next operation immediately
     if (skipCounter > 0) {
@@ -74,5 +77,23 @@ function limiter(interval, penaltyInterval = 5 * interval) {
       }
       timer = setTimeout(deque, delay);
     }
+  }
+}
+
+function promised(fn) {
+  let _ = {};
+  const promise = new Promise((resolve, reject) => _ = { resolve, reject });
+  return {
+    promise,
+    resolve,
+    reject
+  };
+
+  function resolve() {
+    if (fn) { fn(); }
+    _.resolve();
+  }
+  function reject() {
+    _.reject();
   }
 }
