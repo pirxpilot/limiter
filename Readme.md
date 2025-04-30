@@ -83,7 +83,7 @@ Empty `limiter` queue. Remove all pending trigger request. No methods from the q
 [npm-url]: https://npmjs.org/package/limiter-component
 
 [build-url]: https://github.com/pirxpilot/limiter/actions/workflows/check.yaml
-[build-image]: https://img.shields.io/github/workflow/status/pirxpilot/limiter/check
+[build-image]: https://img.shields.io/github/actions/workflow/status/pirxpilot/limiter/check.yaml?branch=main
 
 [deps-image]: https://img.shields.io/librariesio/release/npm/limiter-component
 [deps-url]: https://libraries.io/npm/limiter-component
