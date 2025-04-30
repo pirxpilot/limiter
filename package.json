@@ -2,6 +2,8 @@
   "name": "limiter-component",
   "version": "1.2.0",
   "description": "Limits the rate of function calls to one per period. It delays but does not throttle the calls.",
+  "type": "module",
+  "exports": "./index.js",
   "scripts": {
     "test": "make check"
   },

@@ -1,4 +1,4 @@
-module.exports = limiter;
+export default limiter;
 
 function limiter(interval, penaltyInterval = 5 * interval) {
   let queue = [];

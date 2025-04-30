@@ -1,5 +1,5 @@
-const test = require('node:test');
-const limiter = require('../index.js');
+import test from 'node:test';
+import limiter from '../index.js';
 
 test('limiter functions', async t => {
   await t.test('should call fn at most once per interval', (t, done) => {
