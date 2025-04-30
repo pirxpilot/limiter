@@ -1,8 +1,8 @@
+const test = require('node:test');
 const limiter = require('../index.js');
-const assert = require('assert');
 
-describe('limiter functions', function () {
-  it('should call fn at most once per interval', function (done) {
+test('limiter functions', async t => {
+  await t.test('should call fn at most once per interval', (t, done) => {
     const interval = 35;
     const l = limiter(interval);
     const results = [];
@@ -16,22 +16,22 @@ describe('limiter functions', function () {
     l.trigger(push);
     l.trigger(push);
     l.trigger(function () {
-      assert.equal(results.length, 4);
+      t.assert.equal(results.length, 4);
       results
         .map(function (item, i) {
-          const prev = (i === 0) ? results[0] : results[i - 1];
+          const prev = i === 0 ? results[0] : results[i - 1];
           return item - prev;
         })
         .forEach(function (item, i) {
           if (i > 0) {
-            assert.ok(item >= interval);
+            t.assert.ok(item >= interval);
           }
         });
       done();
     });
   });
 
-  it('should delay calls on penalty', function (done) {
+  await t.test('should delay calls on penalty', (t, done) => {
     const interval = 35;
     const penaltyInterval = 150;
     const l = limiter(interval, penaltyInterval);
@@ -49,10 +49,10 @@ describe('limiter functions', function () {
     l.trigger(push);
     l.trigger(push);
     l.trigger(function () {
-      assert.equal(results.length, 4);
+      t.assert.equal(results.length, 4);
       results
         .map(function (item, i) {
-          const prev = (i === 0) ? results[0] : results[i - 1];
+          const prev = i === 0 ? results[0] : results[i - 1];
           return item - prev;
         })
         .forEach(function (item, i) {
@@ -60,30 +60,30 @@ describe('limiter functions', function () {
             return;
           }
           if (i === 2) {
-            assert.ok(item >= penaltyInterval);
+            t.assert.ok(item >= penaltyInterval);
           } else {
-            assert.ok(item >= interval);
-            assert.ok(item < penaltyInterval);
+            t.assert.ok(item >= interval);
+            t.assert.ok(item < penaltyInterval);
           }
         });
       done();
     });
   });
 
-  it('delay works even when queue is empty', function (done) {
+  await t.test('delay works even when queue is empty', (t, done) => {
     const interval = 50;
     const l = limiter(interval);
     const time = Date.now();
 
-    l.trigger(function () { });
+    l.trigger(function () {});
     l.trigger(function () {
       const delay = Date.now() - time;
-      assert.ok(delay >= interval);
+      t.assert.ok(delay >= interval);
       done();
     });
   });
 
-  it('penalty works even when queue is empty', function (done) {
+  await t.test('penalty works even when queue is empty', (t, done) => {
     const interval = 50;
     const l = limiter(interval);
     const time = Date.now();
@@ -93,12 +93,12 @@ describe('limiter functions', function () {
     });
     l.trigger(function () {
       const delay = Date.now() - time;
-      assert.ok(delay >= 5 * interval);
+      t.assert.ok(delay >= 5 * interval);
       done();
     });
   });
 
-  it('should skip interval on true', function (done) {
+  await t.test('should skip interval on true', (t, done) => {
     const interval = 35;
     const l = limiter(interval);
     const results = [];
@@ -116,15 +116,15 @@ describe('limiter functions', function () {
     l.trigger(push);
     l.trigger(push);
     l.trigger(function () {
-      assert.equal(results.length, 4);
+      t.assert.equal(results.length, 4);
       results
         .map(function (item, i) {
-          const prev = (i === 0) ? results[0] : results[i - 1];
+          const prev = i === 0 ? results[0] : results[i - 1];
           return item - prev;
         })
         .forEach(function (item, i) {
           if (i > 1) {
-            assert.ok(item < interval);
+            t.assert.ok(item < interval);
           }
         });
       done();
@@ -132,8 +132,8 @@ describe('limiter functions', function () {
   });
 });
 
-describe('limiter promises', function () {
-  it('should call fn at most once per interval', async function () {
+test('limiter promises', async t => {
+  await t.test('should call fn at most once per interval', async t => {
     const interval = 35;
     const l = limiter(interval);
     const results = [];
@@ -147,20 +147,20 @@ describe('limiter promises', function () {
     l.trigger(push);
     await l.trigger(push);
 
-    assert.equal(results.length, 4);
+    t.assert.equal(results.length, 4);
     results
       .map(function (item, i) {
-        const prev = (i === 0) ? results[0] : results[i - 1];
+        const prev = i === 0 ? results[0] : results[i - 1];
         return item - prev;
       })
       .forEach(function (item, i) {
         if (i > 0) {
-          assert.ok(item >= interval);
+          t.assert.ok(item >= interval);
         }
       });
   });
 
-  it('should delay calls on penalty', async function () {
+  await t.test('should delay calls on penalty', async t => {
     const interval = 35;
     const penaltyInterval = 150;
     const l = limiter(interval, penaltyInterval);
@@ -178,10 +178,10 @@ describe('limiter promises', function () {
     l.trigger(push);
     await l.trigger(push);
 
-    assert.equal(results.length, 4);
+    t.assert.equal(results.length, 4);
     results
       .map(function (item, i) {
-        const prev = (i === 0) ? results[0] : results[i - 1];
+        const prev = i === 0 ? results[0] : results[i - 1];
         return item - prev;
       })
       .forEach(function (item, i) {
@@ -189,15 +189,15 @@ describe('limiter promises', function () {
           return;
         }
         if (i === 2) {
-          assert.ok(item >= penaltyInterval);
+          t.assert.ok(item >= penaltyInterval);
         } else {
-          assert.ok(item >= interval);
-          assert.ok(item < penaltyInterval);
+          t.assert.ok(item >= interval);
+          t.assert.ok(item < penaltyInterval);
         }
       });
   });
 
-  it('delay works even when queue is empty', async function () {
+  await t.test('delay works even when queue is empty', async t => {
     const interval = 50;
     const l = limiter(interval);
     const time = Date.now();
@@ -206,10 +206,10 @@ describe('limiter promises', function () {
     await l.trigger();
 
     const delay = Date.now() - time;
-    assert.ok(delay >= interval);
+    t.assert.ok(delay >= interval);
   });
 
-  it('penalty works even when queue is empty', async function () {
+  await t.test('penalty works even when queue is empty', async t => {
     const interval = 50;
     const l = limiter(interval);
     const time = Date.now();
@@ -217,10 +217,10 @@ describe('limiter promises', function () {
     l.trigger(() => l.penalty());
     await l.trigger();
     const delay = Date.now() - time;
-    assert.ok(delay >= 5 * interval);
+    t.assert.ok(delay >= 5 * interval);
   });
 
-  it('should skip interval on true', async function () {
+  await t.test('should skip interval on true', async t => {
     const interval = 35;
     const l = limiter(interval);
     const results = [];
@@ -235,15 +235,15 @@ describe('limiter promises', function () {
       l.skip();
     }
 
-    assert.equal(results.length, 4);
+    t.assert.equal(results.length, 4);
     results
       .map(function (item, i) {
-        const prev = (i === 0) ? results[0] : results[i - 1];
+        const prev = i === 0 ? results[0] : results[i - 1];
         return item - prev;
       })
       .forEach(function (item, i) {
         if (i > 1) {
-          assert.ok(item < interval);
+          t.assert.ok(item < interval);
         }
       });
   });

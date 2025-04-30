@@ -82,7 +82,7 @@ function limiter(interval, penaltyInterval = 5 * interval) {
 
 function promised(fn) {
   let _ = {};
-  const promise = new Promise((resolve, reject) => _ = { resolve, reject });
+  const promise = new Promise((resolve, reject) => (_ = { resolve, reject }));
   return {
     promise,
     resolve,
@@ -90,7 +90,9 @@ function promised(fn) {
   };
 
   function resolve() {
-    if (fn) { fn(); }
+    if (fn) {
+      fn();
+    }
     _.resolve();
   }
   function reject() {
